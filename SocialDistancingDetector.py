@@ -33,7 +33,7 @@ def Setup(yolo):
     ln = net.getLayerNames()
     ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
-def ImageProcess(image,Entry,Exit):
+def ImageProcess(image):
     count = 0
     rects = []
     Entry = 25
