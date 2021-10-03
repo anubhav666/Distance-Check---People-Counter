@@ -10,7 +10,11 @@ from trackableobject import TrackableObject
 ct = CentroidTracker(maxDisappeared=100, maxDistance=100)
 trackers = []
 trackableObjects = {}
-
+prevTime = time.time()
+Entry = 0
+Exit = 0
+direction_x = 0
+direction_y = 0
 
 def Check(a,  b, image):
     dist = ((a[0] - b[0]) ** 2 + 800 / ((a[1] + b[1]) / 2) * (a[1] - b[1]) ** 2) ** 0.5
@@ -36,10 +40,11 @@ def Setup(yolo):
 
 
 def ImageProcess(image):
+    global Entry,Exit,direction_y,direction_x,prevTime
     count = 0
     rects = []
-    Entry = totalEntry
-    Exit = totalExit
+    # Entry = totalEntry
+    # Exit = totalExit
     global processedImg
     (H, W) = (None, None)
     frame = image.copy()
@@ -86,11 +91,13 @@ def ImageProcess(image):
             for j in range(len(center)):
                 close = Check(center[i], center[j], frame)
 
-                if close:
+                if close :
                     pairs.append([center[i], center[j]])
                     count += 1
+                    # if (time.time() - prevTime) > 10:
                     status[i] = True
                     status[j] = True
+                        # prevTime = time.time()
         index = 0
         for i in flat_box:
             (x, y) = (outline[i][0], outline[i][1])
@@ -159,20 +166,22 @@ def ImageProcess(image):
             trackableObjects[objectID] = to
             # draw both the ID of the object and the centroid of the
             # object on the output frame
-            text = "ID {}".format(objectID)
-            cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-            cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
-
             if axis == "H":
                 cv2.line(frame, (0, int(L_pos)), (W, int(L_pos)), (255, 255, 0), 2)
             else:
                 cv2.line(frame, (int(L_pos), 0), (int(L_pos), H), (255, 255, 0), 2)
-
+            if centroid[0]> W-0.05*W or centroid[0] < 0.05*W or centroid[1] > H-0.1*H or centroid[1] < 0.1*H :
+            # if not direction_x==0 or direction_y==0:
+            # if not objectID:
+                continue  
+            text = "ID {}".format(objectID)
+            cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
         for h in pairs:
             cv2.line(frame, tuple(h[0]), tuple(h[1]), (0, 0, 255), 2)
     processedImg = frame.copy()
-    return Entry,Exit,count
+    return count
 
 create = None
 frameno = 0
@@ -197,11 +206,11 @@ while(True):
     frameno += 1
 
     if(frameno%2 == 0 or frameno == 1):
-        totalEntry,totalExit,count = ImageProcess(current_img)
+        count = ImageProcess(current_img)
         Frame = processedImg
     info = [
-        ("Exit", totalExit),
-        ("Entry", totalEntry),
+        ("Exit", Exit),
+        ("Entry", Entry),
     ]
     for (i, (k, v)) in enumerate(info):
         text = "{}: {}".format(k, v)
