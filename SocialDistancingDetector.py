@@ -139,26 +139,26 @@ def ImageProcess(image):
                     # is moving up) AND the centroid is above the center
                     # line, count the object
                     if axis == "H":
-                        if direction_y < 0 and centroid[1] < int(L_pos):
-                            Entry += 1
+                        if direction_y < 0 and centroid[1] < int(L_pos) and centroid[1] > int(L_pos)-10 :
+                            Entry = Entry+1
                             to.counted = True
                             print(id, " Entering")
                         # if the direction is positive (indicating the object
                         # is moving down) AND the centroid is below the
                         # center line, count the object
-                        elif direction_y > 0 and centroid[1] > int(L_pos):
-                            Exit += 1
+                        elif direction_y > 0 and centroid[1] > int(L_pos) and centroid[1] < int(L_pos)+10 :
+                            Exit = Exit+1
                             to.counted = True
                             print(id, " Exiting")
                     if axis == "V":
-                        if direction_x < 0 and centroid[0] < int(L_pos):
+                        if direction_x < 0 and centroid[0] < int(L_pos) and centroid[0] > int(L_pos)-10:
                             Entry += 1
                             to.counted = True
                             print(id, " Entering")
                         # if the direction is positive (indicating the object
                         # is moving down) AND the centroid is below the
                         # center line, count the object
-                        elif direction_x and centroid[0] > int(L_pos):
+                        elif direction_x > 0 and centroid[0] > int(L_pos) and centroid[0] < int(L_pos)+10:
                             Exit += 1
                             to.counted = True
                             print(id, " Exiting")
@@ -185,7 +185,7 @@ def ImageProcess(image):
 
 create = None
 frameno = 0
-filename = "videos/example_02.mp4"
+filename = "videos/example_02.mp4" 
 yolo = "yolo-coco/"
 opname = "output_videos/output_of_" + filename.split('/')[1][:-4] + '.mp4'
 cap = cv2.VideoCapture(filename)
