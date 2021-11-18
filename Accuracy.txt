@@ -1,0 +1,10 @@
+From Manual Counting:
+Entry : 11
+Exit : 13
+Maximum Misconduct Count : 8
+ 
+From Algorithm:
+Entry : 9
+Exit : 12
+
+Maximum Misconduct Count : 9
