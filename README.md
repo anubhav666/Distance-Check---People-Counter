@@ -2,7 +2,7 @@
 
 ## Getting Started
 <ul>
-  <li>Download the Yolov3.weights from [here](https://drive.google.com/drive/u/0/folders/1PfDMFh95obu40N-8tLk-EAF7x847EnnM)</li>
+  <li>Download the Yolov3.weights from</li> [here](https://drive.google.com/drive/u/0/folders/1PfDMFh95obu40N-8tLk-EAF7x847EnnM) 
   <li>Load up the Video</li>
   <li>If you wanna test on live feed</li>
 </ul>
