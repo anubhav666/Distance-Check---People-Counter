@@ -3,7 +3,7 @@
 ## Getting Started
 - Download the Yolov3.weights from [here](https://drive.google.com/drive/u/0/folders/1PfDMFh95obu40N-8tLk-EAF7x847EnnM) .
   - Load up the Videos you wanna use in `./videos`
-  - Go to the `SocialDistancingDetector.py`  change the filename `videos/[filename.mp4]`
+  - Go to the `SocialDistancingDetector.py`  change the filename variable to `videos/[filename.mp4]`
   - If you wanna test on live feed change the filename `0` (for native webcam) or the port you've connected the webcam to...
 + *After you've successfully made the required changes*
 + *Head to the terminal/cmd line by right-clicking on the desired path* 
